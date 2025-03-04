@@ -16,19 +16,47 @@ class LoginTest extends ApiTestCase
 {
     public function test_valid_login()
     {
-        $response = $this->post('/api/login',  [
-                    'email' => $this->validEmail,
-                    'password' => $this->validPassword ,
-                ]);
+        $response = $this->post('/api/login', [
+            'email' => $this->validEmail,
+            'password' => $this->validPassword,
+        ]);
         $response->assertStatus(200);
     }
 
     public function test_invalid_login()
     {
-        $response = $this->post('/api/login',  [
-                'email' => $this->invalidEmail,
-                'password' => $this->invalidPassword ,
-            ]);
+        $response = $this->post('/api/login', [
+            'email' => $this->invalidEmail,
+            'password' => $this->invalidPassword,
+        ]);
         $response->assertStatus(401);
     }
+
+    public function test_invalid_email_valid_password()
+    {
+        $response = $this->post('/api/login', [
+            'email' => $this->invalidEmail,
+            'password' => $this->validPassword,
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_valid_email_invalid_password()
+    {
+        $response = $this->post('/api/login', [
+            'email' => $this->validEmail,
+            'password' => $this->invalidPassword,
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_password_less_than()
+    {
+        $response = $this->post('/api/login', [
+            'email' => $this->validEmail,
+            'password' => "1234",
+        ]);
+        $response->assertStatus(302);
+    }
+
 }

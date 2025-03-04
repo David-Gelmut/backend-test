@@ -38,4 +38,13 @@ class CompanyTest extends ApiTestCase
             ]);
         $response->assertStatus(201);
     }
+
+    public function test_create__company_not_authenticated_user(): void
+    {
+        $response = $this
+            ->post('/api/companies', [
+                'inn' => $this->validInn
+            ]);
+        $response->assertStatus(500);
+    }
 }

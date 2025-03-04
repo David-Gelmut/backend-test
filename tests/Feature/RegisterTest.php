@@ -24,7 +24,7 @@ class RegisterTest extends ApiTestCase
     {
         $response = $this->post('/api/register', [
             'name' => fake()->name,
-            'email' => $this->validEmail,
+            'email' => fake()->email,
             'password' => $this->validPassword,
             'password_confirmation' => $this->invalidPassword,
         ]);
@@ -38,6 +38,17 @@ class RegisterTest extends ApiTestCase
             'email' => $this->validEmail,
             'password' => $this->validPassword,
             'password_confirmation' => $this->validPassword,
+        ]);
+        $response->assertStatus(302);
+    }
+
+    public function test_valid_email_invalid_password()
+    {
+        $response = $this->post('/api/register', [
+            'name' => fake()->name,
+            'email' => fake()->email,
+            'password' => "123",
+            'password_confirmation' => "123",
         ]);
         $response->assertStatus(302);
     }
