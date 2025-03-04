@@ -25,15 +25,14 @@ class CompanyController extends BaseController
         }
     }
 
-    public function store(CompanyCreateRequest $request):JsonResponse
+    public function store(CompanyCreateRequest $request,DaDataService $daDataService,CreateCompanyService $companyService):JsonResponse
     {
         try {
             $data = $request->validated();
-            $resultDaData = app(DaDataService::class)->findById(["query" => $data['inn'], "count" => 1]);
-            $company = app(CreateCompanyService::class)->createCompany(new CompanyDTO($resultDaData));
+            $resultDaData =  $daDataService->findById(["query" => $data['inn'], "count" => 1]);
+            $company = $companyService->createCompany(new CompanyDTO($resultDaData));
             return  $this->sendResponse(new CompanyResource($company),'A company has been created for a user with ID = '.auth()->user()->id,Response::HTTP_CREATED);
         } catch (CompanyException $e){
-
             return $this->sendError($e->getMessage(),[],$e->getCode());
         }
     }
