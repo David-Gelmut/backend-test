@@ -9,10 +9,8 @@ use Illuminate\Database\Query\Builder;
 
 class CreateCompanyService
 {
-    public function createCompanyAuthUser(CompanyDTO $data): Builder|Model
+    public function createCompanyAuthUser(array $data): Builder|Model
     {
-        $fieldsCompany = $data->toArray();
-        $fieldsCompany['user_id'] = auth()->user()->id;
-        return Company::query()->create($fieldsCompany);
+        return Company::query()->create(array_merge(['user_id' => auth()->user()->id], $data));
     }
 }

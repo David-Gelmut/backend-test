@@ -23,11 +23,11 @@ class CompanyController extends BaseController
         ]);
     }
 
-    public function store(CompanyCreateRequest $request, DaDataService $daDataService, CreateCompanyService $companyService): RedirectResponse
+    public function store(CompanyCreateRequest $request, DaDataService $daDataService, CreateCompanyService $companyService, CompanyDTO $dto): RedirectResponse
     {
         $data = $request->validated();
         $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-        $companyService->createCompanyAuthUser(new CompanyDTO($resultDaData));
+        $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
         return redirect()->route('companies.index');
     }
 

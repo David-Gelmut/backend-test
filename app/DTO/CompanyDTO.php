@@ -4,12 +4,13 @@ namespace App\DTO;
 
 class CompanyDTO
 {
-    public string $inn;
-    public string $ogrn;
-    public string $address;
-    public string $name;
+        public string $inn;
+        public string $ogrn;
+        public string $address;
+        public string $name;
 
-    public function __construct(array $args)
+
+    public function prepareData(array $args):array
     {
         if ($this->validateArgs($args)) {
             $data = $args['suggestions'][0]['data'];
@@ -18,9 +19,11 @@ class CompanyDTO
             $this->ogrn = $data['ogrn'];
             $this->address = $data['address']['unrestricted_value'];
         }
+
+        return $this->toArray();
     }
 
-    public function validateArgs($args): bool
+    private function validateArgs($args): bool
     {
         if (isset($args['suggestions'][0])) {
             return true;

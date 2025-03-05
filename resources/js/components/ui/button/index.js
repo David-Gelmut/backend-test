@@ -7,6 +7,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
+        success:'bg-emerald-300 text-emerald-foreground hover:bg-emerald/90',
         table:'bg-orange-500 text-destructive-foreground hover:bg-destructive/90',
         submit:'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800',
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',

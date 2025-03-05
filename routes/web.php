@@ -2,8 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/home',function (){
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    } else {
+        return redirect()->route('companies.index');
+    }
+});
+
 Route::get('/',function (){
-    return  redirect()->route('login');
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    } else {
+        return redirect()->route('companies.index');
+    }
 });
 
 Route::group(['middleware' => 'guest'], function () {

@@ -1,25 +1,30 @@
 <script setup>
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter, DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from "@/components/ui/dialog/index.js";
-import {Input} from "@/components/ui/input/index.js";
-import {Form, FormControl, FormDescription, FormField, FormItem, FormMessage} from "@/components/ui/form/index.js";
-import {Button} from "@/components/ui/button/index.js";
+import {Dialog,DialogContent,DialogDescription,DialogFooter, DialogHeader,DialogTitle,DialogTrigger} from "@/components/ui/dialog";
+import {Input} from "@/components/ui/input";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormMessage} from "@/components/ui/form";
+import {Button} from "@/components/ui/button";
 import {router} from "@inertiajs/vue3";
+import { Toaster } from '@/components/ui/toast'
+import { useToast } from '@/components/ui/toast/use-toast'
+import {h} from "vue";
+const { toast } = useToast()
 function onSubmit(values) {
-    return router.post('/companies', {
+    router.post('/companies', {
         inn: values.inn
+    },{
+        onSuccess: () => {
+            toast({
+                title: 'Котрагент с ИНН ' + values.inn + ' успешно создан',
+                variant: 'success'
+            })
+        }
     })
 }
 defineProps({ companies: Object, errors: Object })
 </script>
 <template>
-    <Form v-slot="{ handleSubmit }" >
+    <Toaster />
+    <Form v-slot="{ handleSubmit }">
         <Dialog>
             <DialogTrigger as-child>
                 <Button variant="table">
