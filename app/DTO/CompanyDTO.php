@@ -10,14 +10,25 @@ class CompanyDTO
     public string $name;
 
     public function __construct(array $args)
-    {   $data = $args['suggestions'][0]['data'];
-        $this->name = $data['name']['short_with_opf'];
-        $this->inn = $data['inn'];
-        $this->ogrn = $data['ogrn'];
-        $this->address = $data['address']['unrestricted_value'];
+    {
+        if ($this->validateArgs($args)) {
+            $data = $args['suggestions'][0]['data'];
+            $this->name = $data['name']['short_with_opf'];
+            $this->inn = $data['inn'];
+            $this->ogrn = $data['ogrn'];
+            $this->address = $data['address']['unrestricted_value'];
+        }
     }
 
-    public function toArray():array
+    public function validateArgs($args): bool
+    {
+        if (isset($args['suggestions'][0])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function toArray(): array
     {
         return get_object_vars($this);
     }

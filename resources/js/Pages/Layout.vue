@@ -1,12 +1,19 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
+import {Button} from "@/components/ui/button/index.js";
 </script>
 <template>
     <main>
         <header>
-            <nav>
-                <li><Link href="/login">Login</Link></li>
-                <li><Link href="/register">Register</Link></li>
+            <nav class="bg-white border-gray-200 dark:bg-gray-900">
+                <div class="flex flex-wrap mx-auto gap-3 p-4">
+                    <div  v-if= "$page.props.user == null"  class="flex flex-wrap mx-auto gap-3 p-4">
+                        <a href="/login"><Button class="w-full rounded-md mt-4"  variant="outline">Войти</Button></a>
+                        <a href="/register"><Button  class="w-full rounded-md mt-4"  variant="table">Зарегистрироваться</Button></a>
+                    </div>
+                    <div  v-if= "$page.props.user !== null"  class="flex flex-wrap mx-auto gap-3 p-4">
+                        <a href="/logout"><Button class="w-full rounded-md mt-4"  variant="table">Выйти</Button></a>
+                    </div>
+                </div>
             </nav>
         </header>
         <div class="container mx-auto">

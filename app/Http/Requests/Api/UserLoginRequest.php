@@ -22,8 +22,18 @@ class UserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'=>['required','string','email'],
+            'email'=>['required','email'],
             'password'=>['required','min:8']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Поле с email обязательно для заполнения',
+            'email.email' => 'Поле электронной почты должно содержать действительный адрес электронной почты',
+            'password.required' => 'Поле с паролем обязательно для заполнения',
+            'password.min' => 'Поле пароля должно содержать не менее 8 символов.',
         ];
     }
 }

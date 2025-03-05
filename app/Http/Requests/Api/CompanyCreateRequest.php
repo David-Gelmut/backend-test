@@ -11,7 +11,7 @@ class CompanyCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +22,16 @@ class CompanyCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'inn' => ['required', 'string', 'max:12'],
+            'inn' => ['required', 'max:12','min:10'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'inn.required' => 'Поле с ИНН обязательно для заполнения',
+            'inn.max' => 'Поле с ИНН имеет не более 12 символов',
+            'inn.min' => 'Поле с ИНН имеет не менее 10 символов',
         ];
     }
 }

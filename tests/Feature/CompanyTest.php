@@ -22,12 +22,6 @@ class CompanyTest extends ApiTestCase
         $response->assertStatus(200);
     }
 
-    public function test_get_companies_not_authenticated_user(): void
-    {
-        $response = $this->get('/api/companies');
-        $response->assertStatus(500);
-    }
-
     public function test_create_company(): void
     {
         $user = User::where('email', $this->validEmail)->first();
@@ -39,12 +33,18 @@ class CompanyTest extends ApiTestCase
         $response->assertStatus(201);
     }
 
-    public function test_create__company_not_authenticated_user(): void
+    public function test_create__company_not_authenticated_user_with_sanctum(): void
     {
         $response = $this
             ->post('/api/companies', [
                 'inn' => $this->validInn
             ]);
-        $response->assertStatus(500);
+        $response->assertStatus(302);
+    }
+
+    public function test_get_companies_not_authenticated_user_with_sanctum(): void
+    {
+        $response = $this->get('/api/companies');
+        $response->assertStatus(302);
     }
 }

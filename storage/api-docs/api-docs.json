@@ -11,8 +11,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "User registration",
-                "description": "Registering a user and receiving a token",
+                "summary": "Регистрация пользователя",
+                "description": "Регистрация пользователя и получение токена",
                 "operationId": "c47411f6de96b5b30018c647e449e470",
                 "requestBody": {
                     "content": {
@@ -47,7 +47,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User created",
+                        "description": "Пользователь зарегистрирован",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -73,7 +73,7 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "User created!"
+                                                    "example": "Пользователь зарегистрирован"
                                                 }
                                             },
                                             "type": "object"
@@ -91,8 +91,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "User authorization",
-                "description": "User authorization and obtaining a token",
+                "summary": "Авторизация пользователя",
+                "description": "Авторизация пользователя и получение токена",
                 "operationId": "82d74137970376a374510566964c9813",
                 "requestBody": {
                     "content": {
@@ -119,7 +119,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User logged in",
+                        "description": "Пользователь вошел в систему",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -145,7 +145,7 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "User logged in!"
+                                                    "example": "Пользователь вошел в систему!"
                                                 }
                                             },
                                             "type": "object"
@@ -163,12 +163,12 @@
                 "tags": [
                     "Company"
                 ],
-                "summary": "List companies",
-                "description": "List of companies of the authorized user",
+                "summary": "Список компаний",
+                "description": "Список компаний авторизованного пользователя",
                 "operationId": "bac02e71f0b83ba2ee30d9bbe17fd42a",
                 "responses": {
                     "200": {
-                        "description": "Getting a list of companies of an authorized user",
+                        "description": "Получение списка компаний авторизованного пользователя",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -201,7 +201,7 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "List of user companies with ID = 1"
+                                                    "example": "Список компаний пользователя с ID = 1"
                                                 }
                                             },
                                             "type": "object"
@@ -222,8 +222,8 @@
                 "tags": [
                     "Company"
                 ],
-                "summary": "Create company",
-                "description": "Creating a company by INN by an authorized user",
+                "summary": "Создание компании",
+                "description": "Создание компании по ИНН авторизованным пользователем",
                 "operationId": "bcd13c72f54074500df5cf4689c42cda",
                 "requestBody": {
                     "content": {
@@ -276,7 +276,7 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "A company has been created for a user with ID = 1"
+                                                    "example": "Компания была создана для пользователя с ID = 1"
                                                 }
                                             },
                                             "type": "object"

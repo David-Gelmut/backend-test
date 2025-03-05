@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
  * @OA\Post   (
  *      path="/api/register",
  *      tags={"User"},
- *      summary="User registration",
- *      description="Registering a user and receiving a token",
+ *      summary="Регистрация пользователя",
+ *      description="Регистрация пользователя и получение токена",
  *      @OA\RequestBody (
  *          @OA\JsonContent(
  *               allOf={
@@ -24,7 +24,7 @@ use App\Http\Controllers\Controller;
  *       ),
  *       @OA\Response (
  *           response=201,
- *           description="User created",
+ *           description="Пользователь зарегистрирован",
  *           @OA\JsonContent(
  *              allOf={
  *                    @OA\Schema (
@@ -33,7 +33,7 @@ use App\Http\Controllers\Controller;
  *                               @OA\Property (property="name",type="string",example="Tom"),
  *                               @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w"),
  *                       ),
- *                       @OA\Property (property="message",type="string",example="User created!"),
+ *                       @OA\Property (property="message",type="string",example="Пользователь зарегистрирован"),
  *                    )
  *              }
  *           )
@@ -43,8 +43,8 @@ use App\Http\Controllers\Controller;
  * @OA\Post (
  *     path="/api/login",
  *     tags={"User"},
- *     summary="User authorization",
- *     description="User authorization and obtaining a token",
+ *     summary="Авторизация пользователя",
+ *     description="Авторизация пользователя и получение токена",
  *     @OA\RequestBody (
  *         @OA\JsonContent(
  *              allOf={
@@ -57,7 +57,7 @@ use App\Http\Controllers\Controller;
  *      ),
  *      @OA\Response (
  *          response=200,
- *          description="User logged in",
+ *          description="Пользователь вошел в систему",
  *          @OA\JsonContent(
  *             allOf={
  *                   @OA\Schema (
@@ -66,7 +66,7 @@ use App\Http\Controllers\Controller;
  *                          @OA\Property (property="name",type="string",example="Tom"),
  *                          @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w"),
  *                      ),
- *                      @OA\Property (property="message",type="string",example="User logged in!"),
+ *                      @OA\Property (property="message",type="string",example="Пользователь вошел в систему!"),
  *                   )
  *             }
  *          )

@@ -16,24 +16,24 @@ class CompanyController extends BaseController
 {
     public function index():JsonResponse
     {
-        try {
+        if(auth()->check()){
             $authUserId = auth()->user()->id;
             $companies = Company::where('user_id',$authUserId)->get();
-            return $this->sendResponse(CompanyResource::collection($companies),'List of user companies with ID = '.$authUserId,Response::HTTP_OK);
-        } catch (CompanyException $e) {
-            return $this->sendError($e->getMessage(),[],$e->getCode());
+            return $this->sendResponse(CompanyResource::collection($companies),'Список компаний пользователя с ID = '.$authUserId,Response::HTTP_OK);
         }
+        return $this->sendError('Пользовател не авторизован',[],Response::HTTP_UNAUTHORIZED);
     }
 
     public function store(CompanyCreateRequest $request,DaDataService $daDataService,CreateCompanyService $companyService):JsonResponse
     {
-        try {
+        if (auth()->check()) {
             $data = $request->validated();
-            $resultDaData =  $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-            $company = $companyService->createCompany(new CompanyDTO($resultDaData));
-            return  $this->sendResponse(new CompanyResource($company),'A company has been created for a user with ID = '.auth()->user()->id,Response::HTTP_CREATED);
-        } catch (CompanyException $e){
-            return $this->sendError($e->getMessage(),[],$e->getCode());
+            $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
+            $company = $companyService->createCompanyAuthUser(new CompanyDTO($resultDaData));
+            return $this->sendResponse(new CompanyResource($company), 'Компания была создана для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
+
         }
+        return $this->sendError('Пользовател не авторизован', [], Response::HTTP_UNAUTHORIZED);
+
     }
 }

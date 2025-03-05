@@ -19,7 +19,7 @@ class AuthController extends BaseController
         return $this->sendResponse([
             'name' => $user->name,
             'token' =>  $user->createToken('Token')->plainTextToken
-        ], "User created!", Response::HTTP_CREATED);
+        ], "Ползователь зарегистрирован", Response::HTTP_CREATED);
     }
 
     public function login(UserLoginRequest $request): JsonResponse
@@ -32,7 +32,7 @@ class AuthController extends BaseController
                 'token' =>  $authUser->createToken('Token')->plainTextToken
             ], "User logged in!", Response::HTTP_OK);
         } else {
-            return $this->sendError('Authorization error', [], Response::HTTP_UNAUTHORIZED);
+            return $this->sendError('Ошибка авторизации', [], Response::HTTP_UNAUTHORIZED);
         }
     }
 }

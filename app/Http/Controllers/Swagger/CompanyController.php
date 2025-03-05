@@ -8,12 +8,12 @@ use App\Http\Controllers\Controller;
  * @OA\Get  (
  *      path="/api/companies",
  *      tags={"Company"},
- *      summary="List companies",
- *      description="List of companies of the authorized user",
+ *      summary="Список компаний",
+ *      description="Список компаний авторизованного пользователя",
  *      security={{ "bearerAuth" :{} }},
  *       @OA\Response (
  *           response=200,
- *           description="Getting a list of companies of an authorized user",
+ *           description="Получение списка компаний авторизованного пользователя",
  *           @OA\JsonContent(
  *              allOf={
  *                    @OA\Schema (
@@ -25,7 +25,7 @@ use App\Http\Controllers\Controller;
  *                              @OA\Property (property="name",type="string",example="ПАО СБЕРБАНК"),
  *                          ),
  *                       ),
- *                       @OA\Property (property="message",type="string",example="List of user companies with ID = 1"),
+ *                       @OA\Property (property="message",type="string",example="Список компаний пользователя с ID = 1"),
  *                    )
  *              }
  *           )
@@ -35,8 +35,8 @@ use App\Http\Controllers\Controller;
  * @OA\Post (
  *     path="/api/companies",
  *     tags={"Company"},
- *     summary="Create company",
- *     description="Creating a company by INN by an authorized user",
+ *     summary="Создание компании",
+ *     description="Создание компании по ИНН авторизованным пользователем",
  *     security={{ "bearerAuth" :{} }},
  *      @OA\RequestBody (
  *         @OA\JsonContent(
@@ -59,7 +59,7 @@ use App\Http\Controllers\Controller;
  *                          @OA\Property (property="inn",type="string",example="7707083893"),
  *                          @OA\Property (property="name",type="string",example="ПАО СБЕРБАНК"),
  *                      ),
- *                      @OA\Property (property="message",type="string",example="A company has been created for a user with ID = 1"),
+ *                      @OA\Property (property="message",type="string",example="Компания была создана для пользователя с ID = 1"),
  *                   )
  *             }
  *          )
