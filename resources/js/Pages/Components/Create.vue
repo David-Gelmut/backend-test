@@ -14,7 +14,7 @@ function onSubmit(values) {
     },{
         onSuccess: () => {
             toast({
-                title: 'Котрагент с ИНН ' + values.inn + ' успешно создан',
+                title: 'Контрагент с ИНН ' + values.inn + ' успешно создан',
                 variant: 'success'
             })
         }

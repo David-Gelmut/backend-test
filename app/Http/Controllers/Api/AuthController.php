@@ -29,7 +29,7 @@ class AuthController extends BaseController
             $authUser = Auth::user();
             return $this->sendResponse([
                 'name' => $authUser->name,
-                'token' =>  $authUser->createToken('Token')->plainTextToken
+                'token' =>  $authUser->createToken('Token', ['*'], now()->addDays(7))->plainTextToken
             ], "User logged in!", Response::HTTP_OK);
         } else {
             return $this->sendError('Ошибка авторизации', [], Response::HTTP_UNAUTHORIZED);
