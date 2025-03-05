@@ -10,6 +10,12 @@ import {
 import {Input} from "@/components/ui/input/index.js";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormMessage} from "@/components/ui/form/index.js";
 import {Button} from "@/components/ui/button/index.js";
+import {router} from "@inertiajs/vue3";
+function onSubmit(values) {
+    return router.post('/companies', {
+        inn: values.inn
+    })
+}
 defineProps({ companies: Object, errors: Object })
 </script>
 <template>
@@ -50,12 +56,6 @@ defineProps({ companies: Object, errors: Object })
             </DialogContent>
         </Dialog>
     </Form>
-
-
-
-
-
-
 </template>
 
 

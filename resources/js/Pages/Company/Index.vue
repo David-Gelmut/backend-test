@@ -1,44 +1,8 @@
 <script setup>
-import { Button } from '@/components/ui/button'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import Layout from "@/Pages/Layout.vue";
 import Pagination from "@/Pages/Components/Pagination.vue";
-import { router, usePage  } from '@inertiajs/vue3'
-import { useForm } from 'vee-validate'
-const page = usePage()
-const form = useForm()
-function onSubmit(values) {
-    return router.post('/companies', {
-        _token: page.props.csrf_token,
-        inn: values.inn
-    })
-}
-
-const searchSubmit = form.handleSubmit((values) => {
-    router.get('/search', {
-        _token: page.props.csrf_token,
-        search: values.search,
-    })
-})
-
+import Create from "@/Pages/Components/Create.vue";
+import SearchForm from "@/Pages/Components/SearchForm.vue";
 defineProps({ companies: Object, errors: Object })
 </script>
 <template >
@@ -47,43 +11,7 @@ defineProps({ companies: Object, errors: Object })
             <div  class="w-3/5 m-auto p-2">
                 <div class="flex justify-between">
                     <h1 class="font-black text-2xl pb-3">Добавленные контрагенты</h1>
-                    <Form v-slot="{ handleSubmit }" >
-                        <Dialog>
-                            <DialogTrigger as-child>
-                                <Button variant="table">
-                                    Добавить
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent class="sm:max-w-[425px]">
-                                <DialogHeader>
-                                    <DialogTitle>Добавление контрагента</DialogTitle>
-                                    <DialogDescription>
-                                        Введите ИНН, чтобы добавить контрагента.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <form id="dialogForm" @submit="handleSubmit($event, onSubmit)">
-                                    <FormField v-slot="{ componentField }" name="inn">
-                                        <FormItem>
-                                            <FormControl>
-                                                <Input  :class="{'border-red-400':errors.inn}" type="number" placeholder="ИНН" v-bind="componentField" />
-                                            </FormControl>
-                                            <span class="text-red-500" v-if="errors.inn">{{errors.inn}}</span>
-                                            <FormDescription>
-                                                После нажатия на кнопку Добавить, данные автоматически подгрузятся в таблицу
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    </FormField>
-                                </form>
-
-                                <DialogFooter>
-                                    <Button type="submit" form="dialogForm" variant="table">
-                                        Добавить
-                                    </Button>
-                                </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
-                    </Form>
+                    <Create :errors="errors" :companies="companies" />
                 </div>
                 <div class="pb-4 bg-white dark:bg-gray-900">
                     <div class="relative mt-1">
@@ -92,12 +20,7 @@ defineProps({ companies: Object, errors: Object })
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <form @submit.prevent="searchSubmit">
-                            <FormField v-slot="{ componentField }" name="search">
-                                <input v-bind="componentField" type="text" id="table-search" class="w-full block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Поиск по ИНН / наименованию">
-                                <span class="text-red-500" v-if="errors.search">{{errors.search}}</span>
-                            </FormField>
-                        </form>
+                        <SearchForm :errors="errors"/>
                     </div>
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -150,42 +73,7 @@ defineProps({ companies: Object, errors: Object })
                      Добавьте первого контрагента
                 </div>
                 <div>
-                    <Form v-slot="{ handleSubmit }">
-                        <Dialog>
-                            <DialogTrigger as-child>
-                                <Button class="" variant="table">
-                                    Добавить
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent class="sm:max-w-[425px]">
-                                <DialogHeader>
-                                    <DialogTitle>Добавление контрагента</DialogTitle>
-                                    <DialogDescription>
-                                        Введите ИНН, чтобы добавить контрагента.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <form id="dialogForm" @submit="handleSubmit($event, onSubmit)">
-                                    <FormField v-slot="{ componentField }" name="inn">
-                                        <FormItem>
-                                            <FormControl>
-                                                <Input :class="{'border-red-400':errors.inn}" type="text" placeholder="ИНН" v-bind="componentField" />
-                                            </FormControl>
-                                            <span class="text-red-500" v-if="errors.inn">{{errors.inn}}</span>
-                                            <FormDescription>
-                                                После нажатия на кнопку Добавить, данные автоматически подгрузятся в таблицу
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
-                                    </FormField>
-                                </form>
-                                <DialogFooter>
-                                    <Button type="submit" form="dialogForm" variant="table">
-                                        Добавить
-                                    </Button>
-                                </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
-                    </Form>
+                    <Create :errors="errors" :companies="companies" />
                 </div>
         </div>
     </div>

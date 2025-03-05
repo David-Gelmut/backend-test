@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/',function (){
+    return  redirect()->route('login');
+});
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/',function (){
-        return  redirect()->route('login');
-    });
     Route::get('/login', [\App\Http\Controllers\Inertia\AuthController::class, 'login'])->name('login');
     Route::post('/login', [\App\Http\Controllers\Inertia\AuthController::class, 'auth'])->name('auth');
     Route::get('/register', [\App\Http\Controllers\Inertia\AuthController::class, 'register'])->name('register');
