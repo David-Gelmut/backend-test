@@ -33,7 +33,7 @@ class CompanyController extends BaseController
                 $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
                 return redirect()->route('companies.index')->with('alert_success', 'Контрагент с ИНН ' . $data['inn'] . ' успешно создан');
             } else {
-                return redirect()->route('companies.index')->with('alert_error', 'Контрагент с ИНН ' . $data['inn'] . 'не найден');
+                return redirect()->route('companies.index')->with('alert_error', 'Контрагент с ИНН ' . $data['inn'] . ' не найден');
             }
         }
         return redirect()->route('companies.index')->with('alert_error', 'Ошибка получения данных из DaData');
