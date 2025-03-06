@@ -7,8 +7,8 @@
 
 ### Подготовка базы данных:
 
-1. Подготовка тестовой базы данных по пути /config/database/test_database.sqlite. По умолчанию конфигурация test_database.
-2. Подготовка  базы данных по пути /config/database/database.sqlite. Прописываем пути в настройках.
+1. Подготовка базы данных по пути /database/database.sqlite. Прописываем пути к базе в настройках подключения и в .env файле  DB_CONNECTION=sqlite.
+2. Для тестов. Подготовка тестовой базы данных по пути /database/test_database.sqlite. По умолчанию конфигурация test_database и в .env файле DB_CONNECTION=test_database.
 3. Выполняем миграции:
 
     ```
