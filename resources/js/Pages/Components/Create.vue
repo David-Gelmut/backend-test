@@ -12,10 +12,11 @@ function onSubmit(values) {
     router.post('/companies', {
         inn: values.inn
     },{
-        onSuccess: () => {
+        onSuccess: (data) => {
+            let status = data.props.create_company_status;
             toast({
-                title: 'Контрагент с ИНН ' + values.inn + ' успешно создан',
-                variant: 'success'
+                title: status?'Контрагент с ИНН ' + values.inn + ' успешно создан':'Контрагент с ИНН ' + values.inn + ' не найден',
+                variant: status? 'success':'destructive'
             })
         }
     })

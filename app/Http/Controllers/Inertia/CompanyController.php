@@ -9,6 +9,7 @@ use App\Http\Requests\Inertia\CompanySearchRequest;
 use App\Models\Company;
 use App\Services\CreateCompanyService;
 use App\Services\DaDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,11 +24,16 @@ class CompanyController extends BaseController
         ]);
     }
 
-    public function store(CompanyCreateRequest $request, DaDataService $daDataService, CreateCompanyService $companyService, CompanyDTO $dto): RedirectResponse
+    public function store(CompanyCreateRequest $request, DaDataService $daDataService, CreateCompanyService $companyService, CompanyDTO $dto)//: JsonResponse |RedirectResponse
     {
         $data = $request->validated();
         $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-        $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
+        if($resultDaData['suggestions']){
+            session(['create_company_status' => true]);
+            $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
+            return redirect()->route('companies.index');
+        }
+        session(['create_company_status' => false]);
         return redirect()->route('companies.index');
     }
 
