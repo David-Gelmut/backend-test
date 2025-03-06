@@ -27,13 +27,16 @@ class CompanyController extends BaseController
     {
         $data = $request->validated();
         $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-        if ($resultDaData['suggestions']) {
-            session(['create_company_status' => true]);
-            $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
-            return redirect()->route('companies.index');
+
+        if (isset($resultDaData['suggestions'])) {
+            if (count($resultDaData['suggestions']) > 0) {
+                $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
+                return redirect()->route('companies.index')->with('alert_success', 'Контрагент с ИНН ' . $data['inn'] . ' успешно создан');
+            } else {
+                return redirect()->route('companies.index')->with('alert_error', 'Контрагент с ИНН ' . $data['inn'] . 'не найден');
+            }
         }
-        session(['create_company_status' => false]);
-        return redirect()->route('companies.index');
+        return redirect()->route('companies.index')->with('alert_error', 'Ошибка получения данных из DaData');
     }
 
     public function search(CompanySearchRequest $request): Response|RedirectResponse

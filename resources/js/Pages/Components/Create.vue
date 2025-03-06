@@ -13,11 +13,18 @@ function onSubmit(values) {
         inn: values.inn
     },{
         onSuccess: (data) => {
-            let status = data.props.create_company_status;
-            toast({
-                title: status?'Контрагент с ИНН ' + values.inn + ' успешно создан':'Контрагент с ИНН ' + values.inn + ' не найден',
-                variant: status? 'success':'destructive'
-            })
+            if(data.props.error){
+                toast({
+                    title: data.props.error,
+                    variant:'destructive'
+                })
+            }
+            if(data.props.success){
+                toast({
+                    title: data.props.success,
+                    variant: 'success'
+                })
+            }
         }
     })
 }

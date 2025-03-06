@@ -29,11 +29,16 @@ class CompanyController extends BaseController
         if (auth()->check()) {
             $data = $request->validated();
             $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-            if ($resultDaData['suggestions']) {
-                $company = $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
-                return $this->sendResponse(new CompanyResource($company), 'Компания была создана для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
+            if (isset($resultDaData['suggestions'])) {
+                if (count($resultDaData['suggestions']) > 0) {
+                    $company = $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
+                    return $this->sendResponse(new CompanyResource($company), 'Контрагент с ИНН ' . $data['inn'] . ' успешно создан для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
+
+                } else{
+                    return $this->sendResponse([], 'Контрагент с ИНН ' . $data['inn'] . ' не найден для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
+                }
             }
-            return $this->sendError('Компания не найдена', [], Response::HTTP_OK);
+            return $this->sendError('Ошибка получения данных из DaData', [], Response::HTTP_OK);
         }
         return $this->sendError('Пользователь не авторизован', [], Response::HTTP_UNAUTHORIZED);
     }
