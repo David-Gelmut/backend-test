@@ -11,10 +11,10 @@ services:
             - ./:/var/www/app
         depends_on:
             - db
-            - php
+            - app
         restart: always
 
-    php:
+    app:
         build:
             context: ./docker
             dockerfile: Dockerfile
