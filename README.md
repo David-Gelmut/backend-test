@@ -25,7 +25,8 @@
 
 ### Запуск проекта по http://localhost:8000/ .
 
-### [Swagger документация](http://localhost:8000/api/documentation)
+### API. [Swagger документация](http://localhost:8000/api/documentation).
+  Авторизация по API осуществляется с помощью Bearer token. 
 
 
 
