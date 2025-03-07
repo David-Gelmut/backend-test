@@ -35,7 +35,7 @@ class CompanyController extends BaseController
                     return $this->sendResponse(new CompanyResource($company), 'Контрагент с ИНН ' . $data['inn'] . ' успешно создан для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
 
                 } else{
-                    return $this->sendResponse([], 'Контрагент с ИНН ' . $data['inn'] . ' не найден для пользователя с ID = ' . auth()->user()->id, Response::HTTP_CREATED);
+                    return $this->sendResponse([], 'Контрагент с ИНН ' . $data['inn'] . ' не найден для пользователя с ID = ' . auth()->user()->id, Response::HTTP_OK);
                 }
             }
             return $this->sendError('Ошибка получения данных из DaData', [], Response::HTTP_OK);

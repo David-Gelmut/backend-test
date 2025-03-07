@@ -16,7 +16,7 @@ class DaDataService
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            'Authorization: Token ' . env('DADATA_TOKEN', ''),
+            'Authorization: Token ' . config('dadata.token'),
             "Accept: application/json"
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));

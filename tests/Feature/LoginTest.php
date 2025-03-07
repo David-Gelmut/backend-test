@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Cookie;
-use Tests\ApiTestCase;
+use Tests\BaseTestCase;
 use Tests\TestCase;
 
-class LoginTest extends ApiTestCase
+class LoginTest extends BaseTestCase
 {
     public function test_valid_login()
     {

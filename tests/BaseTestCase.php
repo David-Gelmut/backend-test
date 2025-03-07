@@ -5,13 +5,14 @@ namespace Tests;
 use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class ApiTestCase extends TestCase
+class BaseTestCase extends TestCase
 {
-    protected string $validEmail = "david@dav.ru";
+    protected string $validEmail = "user@user.ru";
     protected string $validPassword = "123456789";
     protected string $invalidEmail = "invalid@dav.ru";
     protected string $invalidPassword = "invalids";
     protected string $validInn = "7707083893";
+    protected string $invalidInn = "11111111111";
 
     protected function fetchXsrfToken()
     {
