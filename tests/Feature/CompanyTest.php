@@ -45,7 +45,7 @@ class CompanyTest extends BaseTestCase
             ->post('/api/companies', [
                 'inn' => $this->validInn
             ]);
-        $response->assertStatus(201);
+        $response->assertStatus(200);
     }
 
     public function test_create_company_valid_inn(): void
@@ -56,7 +56,7 @@ class CompanyTest extends BaseTestCase
             ->post('/api/companies', [
                 'inn' => $this->validInn,
             ]);
-        $response->assertStatus(201);
+        $response->assertStatus(200);
     }
 
     public function test_create_company_invalid_inn(): void
@@ -67,6 +67,6 @@ class CompanyTest extends BaseTestCase
             ->post('/api/companies', [
                 'inn' => $this->invalidInn,
             ]);
-        $response->assertStatus(200);
+        $response->assertStatus(404);
     }
 }
