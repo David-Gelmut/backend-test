@@ -2,52 +2,52 @@
 
 namespace App\Http\Controllers\Inertia;
 
-use App\DTO\CompanyDTO;
-use App\Http\Controllers\Api\BaseController;
+use App\Exceptions\CompanyException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CompanyCreateRequest;
 use App\Http\Requests\Inertia\CompanySearchRequest;
-use App\Models\Company;
-use App\Services\CreateCompanyService;
-use App\Services\DaDataService;
+use App\Services\CompanyService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class CompanyController extends BaseController
+class CompanyController extends Controller
 {
+    public function __construct(private CompanyService $companyService)
+    {
+    }
+
     public function index(): Response
     {
-        $companies = Company::where('user_id', auth()->user()->id)->paginate(5);
-        return Inertia::render('Company/Index', [
-            'companies' => $companies
-        ]);
-    }
-
-    public function store(CompanyCreateRequest $request, DaDataService $daDataService, CreateCompanyService $companyService, CompanyDTO $dto): RedirectResponse
-    {
-        $data = $request->validated();
-        $resultDaData = $daDataService->findById(["query" => $data['inn'], "count" => 1]);
-
-        if (isset($resultDaData['suggestions'])) {
-            if (count($resultDaData['suggestions']) > 0) {
-                $companyService->createCompanyAuthUser($dto->prepareData($resultDaData));
-                return redirect()->route('companies.index')->with('alert_success', 'Контрагент с ИНН ' . $data['inn'] . ' успешно создан');
+        try {
+            return Inertia::render('Company/Index', [
+                'companies' => $this->companyService->getCompanies()
+            ]);
+        } catch (CompanyException $e) {
+            report($e);
+            if (!app()->environment('local') && in_array($e->getCode(), [500, 503, 404, 403])) {
+                return Inertia::render('Errors/Error', ['status' => $e->getCode()]);
             } else {
-                return redirect()->route('companies.index')->with('alert_error', 'Контрагент с ИНН ' . $data['inn'] . ' не найден');
+                throw new CompanyException($e->getMessage(), $e->getCode());
             }
         }
-        return redirect()->route('companies.index')->with('alert_error', 'Ошибка получения данных из DaData');
     }
 
-    public function search(CompanySearchRequest $request): Response|RedirectResponse
+    public function store(CompanyCreateRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        if (isset($data['search']) && count($data) > 0) {
-            $stringSearch = $data['search'];
-            $companies = Company::query()
-                ->where('user_id', auth()->user()->id)
-                ->search($stringSearch)
-                ->paginate(5);
+        try {
+            $resultCreateCompany = $this->companyService->createCompanyAuthUser($request->validated('inn'));
+            return back()->with('alert_success', data_get($resultCreateCompany, 'code'));
+        } catch (CompanyException $e) {
+            report($e);
+            return back()->with('alert_error', $e->getCode());
+        }
+    }
+
+    public function search(CompanySearchRequest $request): Response
+    {
+        try {
+            $companies =  $this->companyService->searchCompanies($request->validated('search'));
             if (count($companies) > 0) {
                 return Inertia::render('Company/Index', [
                     'companies' => $companies
@@ -55,7 +55,13 @@ class CompanyController extends BaseController
             } else {
                 return Inertia::render('Company/Search');
             }
+        } catch(CompanyException $e){
+            report($e);
+            if (!app()->environment('local') && in_array($e->getCode(), [500, 503, 404, 403])) {
+                return Inertia::render('Errors/Error', ['status' => $e->getCode()]);
+            } else {
+                throw new CompanyException($e->getMessage(), $e->getCode());
+            }
         }
-        return redirect()->route('companies.index');
     }
 }

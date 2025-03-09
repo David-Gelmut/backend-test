@@ -28,12 +28,8 @@ use App\Http\Controllers\Controller;
  *           @OA\JsonContent(
  *              allOf={
  *                    @OA\Schema (
- *                       @OA\Property (property="success",type="boolean",example="true"),
- *                       @OA\Property (property="data",type="object",
- *                               @OA\Property (property="name",type="string",example="Tom"),
- *                               @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w"),
- *                       ),
- *                       @OA\Property (property="message",type="string",example="Пользователь зарегистрирован"),
+*                                @OA\Property (property="message",type="string",example="Пользователь Tom зарегистрирован"),
+*                                @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w")
  *                    )
  *              }
  *           )
@@ -61,12 +57,8 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *             allOf={
  *                   @OA\Schema (
- *                      @OA\Property (property="success",type="boolean",example="true"),
- *                      @OA\Property (property="data",type="object",
- *                          @OA\Property (property="name",type="string",example="Tom"),
- *                          @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w"),
- *                      ),
- *                      @OA\Property (property="message",type="string",example="Пользователь вошёл в систему!"),
+ *                           @OA\Property (property="message",type="string",example="Пользователь User авторизован"),
+ *                           @OA\Property (property="token",type="string",example="2|cNYrI1xzLYPw7CW56XaTASlTHSCAE1GWwD1x7qoq8b44e56w"),
  *                   )
  *             }
  *          )

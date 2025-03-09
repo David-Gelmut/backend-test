@@ -2,34 +2,30 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/home',function (){
-    if (!auth()->check()) {
-        return redirect()->route('login');
-    } else {
-        return redirect()->route('companies.index');
-    }
+Route::get('/home', function () {
+    return !auth()->check()?redirect()->route('login'):redirect()->route('companies.index');
 });
 
-Route::get('/',function (){
-    if (!auth()->check()) {
-        return redirect()->route('login');
-    } else {
-        return redirect()->route('companies.index');
-    }
+Route::get('/', function () {
+    return !auth()->check()?redirect()->route('login'):redirect()->route('companies.index');
 });
 
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/login', [\App\Http\Controllers\Inertia\AuthController::class, 'login'])->name('login');
-    Route::post('/login', [\App\Http\Controllers\Inertia\AuthController::class, 'auth'])->name('auth');
-    Route::get('/register', [\App\Http\Controllers\Inertia\AuthController::class, 'register'])->name('register');
-    Route::post('/register', [\App\Http\Controllers\Inertia\AuthController::class, 'store'])->name('store');
+Route::middleware('guest')
+    ->controller(\App\Http\Controllers\Inertia\AuthController::class)
+    ->group(function () {
+    Route::get('/login',  'login')->name('login');
+    Route::post('/login',  'auth')->name('auth');
+    Route::get('/register',  'register')->name('register');
+    Route::post('/register',  'store')->name('store');
 });
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/companies', [\App\Http\Controllers\Inertia\CompanyController::class, 'index'])->name('companies.index');
-    Route::post('/companies', [\App\Http\Controllers\Inertia\CompanyController::class, 'store'])->name('companies.store');
-    Route::get('/search', [\App\Http\Controllers\Inertia\CompanyController::class, 'search'])->name('companies.search');
-    Route::get('/logout', [\App\Http\Controllers\Inertia\AuthController::class, 'logout'])->name('logout');
-});
+Route::middleware('auth')
+    ->controller(\App\Http\Controllers\Inertia\CompanyController::class)
+    ->name('companies.')
+    ->group(function () {
+        Route::get('/companies', 'index')->name('index');
+        Route::post('/companies', 'store')->name('store');
+        Route::get('/search', 'search')->name('search');
+    });
 
-
+Route::get('/logout', [\App\Http\Controllers\Inertia\AuthController::class, 'logout'])->middleware('auth')->name('logout');
 

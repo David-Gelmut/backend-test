@@ -3,7 +3,7 @@ import Layout from "@/Pages/Layout.vue";
 import Pagination from "@/Pages/Components/Pagination.vue";
 import Create from "@/Pages/Components/Create.vue";
 import SearchForm from "@/Pages/Components/SearchForm.vue";
-defineProps({ companies: Object, errors: Object })
+defineProps({ companies: Object, errors: Object})
 </script>
 <template >
     <Layout>
